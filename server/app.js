@@ -6,8 +6,10 @@ const AI_SESSION_ID = uuidv1();
 
 const dialogflow = require('apiai');
 const ai = dialogflow(ACCESS_TOKEN);
+const port = process.env.PORT || 3001;
+const server = app.listen(port, () => console.log('Server has started'));
 
-const server = app.listen(3000, () => console.log('Server has started'));
+app.use(express.static('public'));
 
 const io = require('socket.io')(server);
 
