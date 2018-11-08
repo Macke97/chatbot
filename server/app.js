@@ -9,7 +9,7 @@ const ai = dialogflow(ACCESS_TOKEN);
 const port = process.env.PORT || 3001;
 const server = app.listen(port, () => console.log('Server has started'));
 
-app.use(express.static('public'));
+app.use(express.static('build'));
 
 const io = require('socket.io')(server);
 
