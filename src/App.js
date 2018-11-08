@@ -1,25 +1,70 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Message from './Message';
+import uuidv1 from 'uuid/v1';
+
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:3000');
 
 class App extends Component {
+  state = {
+    messages: [],
+    message: ''
+  };
+
+  componentDidMount() {
+    socket.on('connected', message => {
+      console.log(message);
+    });
+
+    socket.on('ai reply', message => {
+      console.log(message);
+      const data = {
+        id: uuidv1(),
+        name: 'Bot',
+        text: message
+      };
+      this.setState(prevState => ({
+        messages: [...prevState.messages, data]
+      }));
+    });
+  }
+
+  sendMessage = e => {
+    e.preventDefault();
+    const data = {
+      id: uuidv1(),
+      name: 'Macke',
+      text: this.state.message
+    };
+
+    socket.emit('chat message', data);
+
+    this.setState(prevState => ({
+      messages: [...prevState.messages, data],
+      message: ''
+    }));
+  };
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <div className="chat">
+          {this.state.messages.map(m => (
+            <Message key={m.id} {...m} />
+          ))}
+          <form className="chat-form" onSubmit={this.sendMessage}>
+            <input
+              onChange={e => {
+                this.setState({ message: e.target.value });
+              }}
+              className="chat-input"
+              value={this.state.message}
+            />
+            <button>Send</button>
+          </form>
+        </div>
       </div>
     );
   }
