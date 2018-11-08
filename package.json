@@ -14,7 +14,7 @@
   },
   "scripts": {
     "start:react": "react-scripts start",
-    "start": "node server/app",
+    "start": "npm run build && node server/app",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
