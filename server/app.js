@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const uuidv1 = require('uuid/v1');
-const ACCESS_TOKEN = '8f347fdb89e94025b6ae9d0c28a27965';
+const ACCESS_TOKEN = '02f025a3a6a5415f987940b4313e47af';
 const AI_SESSION_ID = uuidv1();
 
 const dialogflow = require('apiai');
