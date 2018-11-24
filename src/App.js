@@ -5,7 +5,7 @@ import Message from './Message';
 import uuidv1 from 'uuid/v1';
 
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:3000');
+const socket = openSocket(`${window.location.protocol}//${window.location.host}`);
 
 class App extends Component {
   state = {
